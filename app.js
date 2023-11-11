@@ -16,9 +16,17 @@ app.get('/consulta', (req, res) =>{
 
 app.post('/livros',  (req, res) => {
     const livro = req.body.livro_name;
-    livros.push(livro);
+    const deletar=req.body.deletar_name;
+    if (deletar){
+        livros.splice(livros.indexOf(livro),1)
+        res.send('livro removido com sucesso!')
+    }else{
+        livros.push(livro);
     res.redirect('/livros');
+    }
+    
 });
+
 
 app.listen(3000, () => {
     console.log("Servidor ligado!");
