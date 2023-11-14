@@ -14,19 +14,22 @@ app.get('/consulta', (req, res) =>{
   res.send( { livros: livros }); 
 });
 
-app.post('/livros',  (req, res) => {
+app.post('/livros', (req, res) => {
     const livro = req.body.livro_name;
-    const deletar=req.body.deletar_name;
-    if (deletar){
-        livros.splice(livros.indexOf(livro),1)
-        res.send('livro removido com sucesso!')
-    }else{
-        livros.push(livro);
-    res.redirect('/livros');
-    }
+    const deletar = req.body.deletar_name;
     
+    if (livro && deletar) {
+        livros.splice(livros.indexOf(livro), 1);
+        res.send('Livro removido com sucesso!');
+    } else {
+        if (livro) {
+            livros.push(livro);
+            res.redirect('/livros');
+        } else {
+            res.send('Por favor, preencha o campo "livro_name" para adicionar ou remover um livro.');
+        }
+    }
 });
-
 
 app.listen(3000, () => {
     console.log("Servidor ligado!");
